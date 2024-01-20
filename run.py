@@ -1,3 +1,16 @@
+#These are the lists for the player 
+miss_ship_player = []
+hit_ship_player = []
+boat_player = []
+
+#These are the lists for the computer
+miss_ship_computer = []
+hit_ship_computer = []
+boat_computer = []
+
+#This is the list so we can keep track of the computers guesses 
+computer_poss_guesses = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+
 import random 
 
 class Board:
@@ -124,3 +137,12 @@ def check_winner(boat_player, boat_computer):
         return True 
     else:
         return
+
+#RThis is to let the player know where the scores were
+def print_hits(result, miss, hit, player):
+    if result in hit:
+        print(f"\n{player} guessed {result}, it was a hit!" )
+    elif result in miss:
+        print(f"\n{player} guessed {result}, it was a miss" )
+
+
