@@ -37,3 +37,61 @@ class Board:
                 row = row + ch
                 place = place + 1
             print(point, " ", row)
+
+# Our function to get the player name    
+def get_player_name():
+    trigger = "off"
+    while trigger == "off":
+        try:
+            name_not_capitalized = input("What is your name, please use three letters only. ")
+            if len(name_not_capitalized) > 3 or len(name_not_capitalized) < 3:
+                raise ValueError("Wrong amount of characters, try again! ")
+            elif name_not_capitalized.isalpha():
+                name = name_not_capitalized.capitalize()
+                return name
+                trigger = "on"
+        except ValueError as e:
+            print("Error:", e)
+
+#This is the function to get the ships on the board 
+def print_boats(boat):
+    random_numbers = random.sample(range(0, 24), 2)
+    boat.extend(random_numbers)
+
+#This is our functuon to get the players hit 
+
+def get_hit(hit_ship_player, miss_ship_player, boat_player):
+    while True:
+        try:
+            ro = input("\nPlease select a row? ")
+            row = int(ro) 
+            if row in range(0,5):
+                break
+            elif row not in range(0,5):
+                print("\nThat's off the board!")
+        except ValueError as e:
+            print("\nPssst, it's meant to be a number!")
+    while True:
+        try:
+            co = input("\nPlease select a column? ")
+            column = int(co) 
+            if column in range(0,5):
+                break
+            elif column not in range(0,5):
+                print("\nThat's off the board!")
+        except ValueError as e:
+            print("\nHey now, it's meant to be a number!")
+    return (row * 5) + column
+
+#This is our function to have the players turn 
+def player_turn(hit_ship_player, miss_ship_player, boat_player):
+    player_hit = "n"
+    player_hit = get_hit(hit_ship_player, miss_ship_player, boat_player)
+    while True:
+        #This will check if the guess is in these lists, if it is we need to guess again
+        if player_hit in hit_ship_player or player_hit in miss_ship_player:
+            print("Looks like you had that guess!")
+            player_hit = get_hit(hit_ship_player, miss_ship_player, boat_player)
+        else:
+            return player_hit
+            break
