@@ -146,3 +146,102 @@ def print_hits(result, miss, hit, player):
         print(f"\n{player} guessed {result}, it was a miss" )
 
 
+
+
+def main():
+    global miss_ship_player, hit_ship_player, boat_player, miss_ship_computer, hit_ship_computer, boat_computer, computer_poss_guesses
+    #get name 
+    turns = 10
+    print("\nWelcome to the Battleship Game!")
+    print("You will play against the computer. Here are the rules:")
+    print("1. You and the computer each have a fleet of ships, five each!.")
+    print("2. Your goal is to sink all of the computer's ships before yours are sunk.")
+    print("3. The game is played on a 5x5 board.")
+    print("4. Ships are represented by '@'. Misses are marked with 'x', and hits are marked with 'o'.")
+    print("You each have five ships!")
+    print("5. You and the computer will take turns guessing the coordinates to attack.")
+    print("6. Enter row and column numbers when prompted to make a guess.")
+    print("7. The game ends when either all your ships or the computer's ships are sunk, or a draw!.")
+    print("8. You have 10 turns to defeat the computer. Use them wisely!")
+    print("\nNow we've got that out of the way, ships ahoy!\n")
+    player_name = get_player_name()
+    game_board = Board(5, "Computer", "Type A")
+    player_print_boats = print_boats(boat_player)
+    game_board.print_board(miss_ship_player, hit_ship_player, boat_player)
+
+    #Get computer's game board 
+    comp = Board(5, player_name, "Type B")
+    computer_print_boats = print_boats(boat_computer)
+    comp.print_board(miss_ship_computer, hit_ship_computer, boat_computer)
+    print(f"Here is miss ship: {miss_ship_player}\nHere is hit ship {hit_ship_player}\nHere is player boat: {boat_player}")
+    print(f"Here is miss ship comp: {miss_ship_computer}\nHere is hit ship comp {hit_ship_computer}\nHere is comp boat: {boat_computer}")
+    print(f"\nTurns: {turns}")
+    for x in range(0, 10):
+
+
+        turns -= 1
+        result = player_turn(miss_ship_player, hit_ship_player, boat_computer)
+        result_computer = computer_guess(computer_poss_guesses)
+
+        check(miss_ship_player, hit_ship_player, boat_computer, result)
+        check(miss_ship_computer, hit_ship_computer, boat_player, result_computer)
+
+        game_board.print_board(miss_ship_player, hit_ship_player, boat_player)
+        comp.print_board(miss_ship_computer, hit_ship_computer, boat_computer)
+        print(f"Here is miss ship: {miss_ship_player}\nHere is hit ship {hit_ship_player}\nHere is player boat: {boat_player}")
+        print(f"Here is miss ship comp: {miss_ship_computer}\nHere is hit ship comp {hit_ship_computer}\nHere is comp boat: {boat_computer}")
+        print(f"\nTurns: {turns}")
+
+        print_hits(result_computer, miss_ship_computer, hit_ship_computer, "Computer")
+        print_hits(result, miss_ship_player, hit_ship_player,player_name)
+        if  check_winner(boat_player, boat_computer):
+            while True:
+                try:
+                    play_again = input("\nThat's the game! Would you like to play again?\nHit y to play again, or n to quit! ") 
+                    if play_again == "y":
+                        miss_ship_player = []
+                        hit_ship_player = []
+                        boat_player = []
+
+                        #These are the lists for the computer
+                        miss_ship_computer = []
+                        hit_ship_computer = []
+                        boat_computer = []
+
+                        #This is the list so we can keep track of the computers guesses 
+                        computer_poss_guesses = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+                        main()
+                    elif play_again == "n":
+                        print("Goodbye! ")
+                        return False 
+
+                except ValueError:
+                    print("Please enter a valid choice! ")
+        if turns == 0:
+
+            while True:
+                try:
+                    play_again = input("\nThat's the game, shame it ended in a draw, why don't you play again!\nHit y to play again, or n to quit! ") 
+                    if play_again == "y":
+                        miss_ship_player = []
+                        hit_ship_player = []
+                        boat_player = []
+
+                        #These are the lists for the computer
+                        miss_ship_computer = []
+                        hit_ship_computer = []
+                        boat_computer = []
+
+                        #This is the list so we can keep track of the computers guesses 
+                        computer_poss_guesses = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+                        main()
+                    elif play_again == "n":
+                        print("Goodbye! ")
+                        return False 
+
+                except ValueError:
+                    print("Please enter a valid choice! ")
+
+
+#This will initialize our game
+main()
