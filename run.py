@@ -95,3 +95,32 @@ def player_turn(hit_ship_player, miss_ship_player, boat_player):
         else:
             return player_hit
             break
+
+
+#This will get the computer's guess 
+def computer_guess(computer_poss_guesses):
+    computer_hit = random.choice(computer_poss_guesses)
+    computer_poss_guesses.remove(computer_hit)
+    return computer_hit
+
+#This wll check if the guess hit a boat, if it does it's added to hit, if not it's a miss 
+def check(miss, hit, boat, result):
+    if result in boat:
+        boat.remove(result)
+        hit.append(result)
+    else:
+        miss.append(result)      
+
+#This is our function to check for the winner        
+def check_winner(boat_player, boat_computer):
+    if len(boat_computer) == 0 and len(boat_player) == 0:
+        print("\nAll ships are down,  it's a tie! ")
+        return True 
+    elif len(boat_computer) == 0:
+        print("\nYour ships are down, computer wins! ")
+        return True 
+    elif len(boat_player) == 0:
+        print("\nComputer's ships are down, you win! ")  
+        return True 
+    else:
+        return
